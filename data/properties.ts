@@ -24,7 +24,7 @@ export const properties: Property[] = [
     },
     {
         id: '2',
-        title: 'Contemporary apartment in Demra',
+        title: 'Golden Sky',
         description: 'Built on 28 Katha land. Total 156 land shares',
         price: 1200000,
         location: 'Demra, Basherpul, Dhaka',
