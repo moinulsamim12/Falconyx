@@ -4,6 +4,32 @@ import { Bed, Bath, Maximize, MapPin, Check } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 import Link from 'next/link';
 
+function getFeatureParts(feature: string) {
+    // Detect if the feature starts with an emoji or symbol
+    const emojiSymbolRegex = /^([\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2B50}\u{2B55}\u{3030}\u{303D}\u{3297}\u{3299}\u{1F000}-\u{1FAFF}\uFE0F\u200D]+)\s*/u;
+    const match = feature.match(emojiSymbolRegex);
+
+    if (match) {
+        return {
+            icon: <span className="w-5 h-5 text-primary-600">{match[1]}</span>,
+            text: feature.slice(match[0].length),
+        };
+    }
+
+    return {
+        icon: <Check className="w-5 h-5 text-primary-600" />,
+        text: feature,
+    };
+}
+
+function getFeatureIcon(feature: string) {
+    return getFeatureParts(feature).icon;
+}
+
+function getFeatureText(feature: string) {
+    return getFeatureParts(feature).text;
+}
+
 export default async function PropertyDetailPage({
     params,
 }: {
@@ -89,8 +115,8 @@ export default async function PropertyDetailPage({
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {property.features.map((feature, idx) => (
                                     <div key={idx} className="flex items-center space-x-2">
-                                        <Check className="w-5 h-5 text-primary-600" />
-                                        <span className="text-gray-700">{feature}</span>
+                                        {getFeatureIcon(feature)}
+                                        <span className="text-gray-700">{getFeatureText(feature)}</span>
                                     </div>
                                 ))}
                             </div>
